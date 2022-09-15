@@ -1,33 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import './App.css';
-import Auth from './components/Auth/Auth';
-import Sitebar from './components/Navbar/Navbar';
-import WorkoutIndex from './components/Workout/WorkoutIndex'
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import Auth from "./components/Auth/Auth";
+import Sitebar from "./components/Navbar/Navbar";
+import MovieIndex from "./components/Movie/MovieIndex";
 
 function App() {
-
-  const [sessionToken, setSessionToken] = useState('')
+  const [sessionToken, setSessionToken] = useState("");
 
   useEffect(() => {
-    if(localStorage.getItem('token')) {
-      setSessionToken(localStorage.getItem('token'))
+    if (localStorage.getItem("token")) {
+      setSessionToken(localStorage.getItem("token"));
     }
-  }, [])
+  }, []);
 
-  const clearToken = () =>{
-    localStorage.clear()
-    setSessionToken('')
-  }
+  const clearToken = () => {
+    localStorage.clear();
+    setSessionToken("");
+  };
 
   const updateToken = (newToken) => {
-    localStorage.setItem('token', newToken)
-    setSessionToken(newToken)
-    console.log(newToken)
-  }
+    localStorage.setItem("token", newToken);
+    setSessionToken(newToken);
+    console.log(newToken);
+  };
 
   const protectedViews = () => {
-    return (localStorage.getItem('token') === sessionToken ? <WorkoutIndex token={sessionToken} /> : <Auth updateToken={updateToken} />)
-  }
+    return localStorage.getItem("token") === sessionToken ? (
+      <MovieIndex token={sessionToken} />
+    ) : (
+      <Auth updateToken={updateToken} />
+    );
+  };
 
   return (
     <div className="App">
@@ -38,4 +41,3 @@ function App() {
 }
 
 export default App;
-
