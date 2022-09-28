@@ -4,6 +4,7 @@ import MovieCreate from "./MovieCreate";
 import MovieTable from "./MovieTable";
 import MovieEdit from "./MovieEdit";
 import { Endpoints } from "../Endpoints";
+import { Route } from "../Routes";
 
 function MovieIndex(props) {
   const [movies, setMovies] = useState([]);
@@ -25,8 +26,13 @@ function MovieIndex(props) {
 
   const fetchMovies = async () => {
     // TODO fetch all the movies
-    console.log("getall movies");
+
     try {
+      Route.get(
+        Endpoints.movie.getall,
+        (data) => setMovies(data.movie),
+        props.token
+      );
     } catch (error) {
       console.error(error);
     }

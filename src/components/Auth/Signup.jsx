@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Signup.css";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
+import { Endpoints } from "../Endpoints";
 
 function Signup(props) {
   const [firstname, setFirstname] = useState("");
@@ -14,6 +15,33 @@ function Signup(props) {
     // TODO add fetch to signup
     // TODO pass the token to the parent component
     // ex: props.updateToken(user.token)
+
+    let bodyObject = JSON.stringify({
+      user: {
+        email: email,
+        password: password,
+        firstName: firstname,
+        lastName: lastname,
+      },
+    });
+
+    let myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: bodyObject,
+    };
+
+    try {
+      const response = await fetch(Endpoints.user.signup, requestOptions);
+      const data = await response.json();
+      console.log(data.token);
+      props.updateToken(data.token);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
